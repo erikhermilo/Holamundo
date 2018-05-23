@@ -11,15 +11,21 @@
 		</div>
 		
 			
-			<p>
+			
+          <p>               
+<form wicket:id="form">
+    
                         <br> <h1><span wicket:id="message" id="message">Mensaje</span></h1>
        			<br>Version de Wicket: <wicket:container wicket:id="version">1.5-SNAPSHOT</wicket:container>.
-               		   <br> Hora actual: <span wicket:id="hora" id="message">Hora</span>
+               		   <br> Hora actual: <span wicket:id="hora" id="hora">Hora</span>
                          <br> Autor: <span wicket:id="1" id="1">Mensaje</span>
-
-
-                </p>
-		
+                         <br>
+                         <input wicket:id="button1" type="submit" value="Excepcion" />
+</form>
+		<span wicket:id="feedback">feedbackmessages will be put here</span>
+      <!--  </p><p>
+            <input type="button" wicket:id = "actionOnClickLink" value="click me" />
+        </p>-->
 		<div id="ft">
 		</div>
 
