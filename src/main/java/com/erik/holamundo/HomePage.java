@@ -1,8 +1,7 @@
 package com.erik.holamundo;
 
 
-import javafx.scene.control.Alert;
-import javafx.scene.web.WebEvent;
+
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
