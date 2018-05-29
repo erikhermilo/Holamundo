@@ -102,6 +102,8 @@ public class Correo {
         }
         catch (MessagingException me) {
             me.printStackTrace();
+            
+            
         }
     }
 }
