@@ -2,23 +2,33 @@ package com.erik.holamundo;
 
 
 
+import com.erik.holamundo.dao.PersonaDao;
+import com.erik.holamundo.models.Persona;
+import java.util.List;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
+import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.TimeOfDay;
 
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
 private static String USER_NAME = "pruebas.wicket";  // GMail user name (just the part before "@gmail.com")
     private static String PASSWORD = "erik.wick99"; // GMail password
-    
+  @SpringBean(name="personaDao")
+PersonaDao personaDao;  
+  
 	public HomePage(final PageParameters parameters) {
 		super(parameters);
 
@@ -53,7 +63,30 @@ form.add(new Label("version", getApplication().getFrameworkSettings().getVersion
 //             };
 //        };  
 //        add(actionOnClickLink);
-    };
+WebMarkupContainer datacontainer = new WebMarkupContainer("data");
+                    datacontainer.setOutputMarkupId(true);
+                    add(datacontainer);
+                    
+                    @SuppressWarnings({"rawtypes","unchequed"})
+                    PageableListView listview = new PageableListView("rows",  getpersonaModelList(),10){
+                        @Override
+                        protected void populateItem(ListItem item){
+                            Persona persona = (Persona) item.getDefaultModelObject();
+                            item.add(new Label("name", persona.getStrNombre()));
+                            item.add(new Label("apellido", persona.getStrAPaterno()));
+
+                        }
+                    };
+                    datacontainer.add(listview);
+                    add(new AjaxPagingNavigator("navigator",listview));
+                    datacontainer.setVersioned(false);
+        
+         };
+        private List<Object> getpersonaModelList(){
+            return personaDao.getAllPersonas("from persona");
+        }
+
+   
 		// TODO Add your page's components here
         public void correo(){
                try{
